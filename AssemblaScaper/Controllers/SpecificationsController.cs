@@ -11,7 +11,7 @@ namespace AssemblaScaper.Controllers
         //
         // GET: /Specifications/
 
-        public ActionResult Index()
+        public ActionResult Index(string id)
         {
             return View();
         }

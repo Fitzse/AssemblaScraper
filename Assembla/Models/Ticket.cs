@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace Assembla
+namespace Assembla.Models
 {
     [Serializable]
     public class Ticket
