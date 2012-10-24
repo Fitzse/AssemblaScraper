@@ -134,6 +134,12 @@
   <ItemGroup>
     <Content Include="Views\Specifications\Index.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Assembla\Assembla.csproj">
+      <Project>{d592b881-55d7-4ef6-a5cc-5c3b8dc0ef38}</Project>
+      <Name>Assembla</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

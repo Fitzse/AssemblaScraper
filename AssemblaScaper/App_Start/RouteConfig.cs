@@ -14,9 +14,9 @@ namespace AssemblaScaper
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Specifications", action = "Index", id = UrlParameter.Optional }
+                name: "SpecificationSubDomain",
+                url: "Specifications/{subdomain}/{space}",
+                defaults: new { controller = "Specifications", action = "Index"}
             );
         }
     }

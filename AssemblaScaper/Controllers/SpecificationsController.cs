@@ -11,8 +11,10 @@ namespace AssemblaScaper.Controllers
         //
         // GET: /Specifications/
 
-        public ActionResult Index(string id)
+        public ActionResult Index(string subdomain, string space, string username, string password)
         {
+            var assemblaApi = new Assembla.Api(username, password);
+            var tickets = assemblaApi.GetTicketsForSpace(subdomain ?? "www", space);
             return View();
         }
 
