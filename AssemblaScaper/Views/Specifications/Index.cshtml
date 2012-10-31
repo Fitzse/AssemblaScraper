@@ -1,5 +1,10 @@
-﻿@{
+﻿@model IEnumerable<Assembla.Models.Ticket>
+@{
     ViewBag.Title = "Tickets";
 }
 
-<h2>Tickets</h2>
+<h2>Tickets For @ViewData["space"]</h2>
+@foreach(var ticket in Model)
+{
+    @Html.DisplayFor(m => ticket);
+}

@@ -15,7 +15,8 @@ namespace AssemblaScaper.Controllers
         {
             var assemblaApi = new Assembla.Api(username, password);
             var tickets = assemblaApi.GetTicketsForSpace(subdomain ?? "www", space);
-            return View();
+            ViewData["space"] = space;
+            return View(tickets);
         }
 
     }

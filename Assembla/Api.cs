@@ -4,9 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 using Assembla.Models;
 
 namespace Assembla
@@ -47,10 +45,8 @@ namespace Assembla
                     using(var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
                     {
                         var xDoc = XDocument.Load(reader);
-                        var ticketsElement = xDoc.Element("tickets");
-                        var ticketEle = ticketsElement.Elements("ticket").First();
-                        var ticket = Ticket.FromElement(ticketEle);
-                        return ticketsElement.Elements("ticket").Select(x => Ticket.FromElement(x));
+                        var elements = xDoc.Descendants("ticket");
+                        return xDoc.Descendants("ticket").Select(Ticket.FromElement);
                     }
                 }
             }
