@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Xml.Linq;
@@ -7,6 +8,7 @@ using System.Xml.Serialization;
 namespace Assembla.Models
 {
     [Serializable]
+    [XmlRoot("ticket")]
     public class Ticket
     {
         [XmlElement("id")]
@@ -18,17 +20,28 @@ namespace Assembla.Models
         [XmlElement("summary")]
         public string Summary { get; set; }
 
-        [XmlElement("reporter-id")]
-        public string ReporterId { get; set; }
+        //[XmlElement("reporter-id")]
+        //public string ReporterId { get; set; }
 
-        [XmlElement("priority")]
-        public int Priority { get; set; }
+        //[XmlElement("priority")]
+        //public int Priority { get; set; }
 
-        [XmlElement("status")]
-        public int Status { get; set; }
+        //[XmlElement("status")]
+        //public int Status { get; set; }
 
         [XmlElement("description")]
         public string Description { get; set; }
+
+        [XmlIgnore]
+        public int? ParentNumber { get; set; }
+
+        [XmlIgnore]
+        public IEnumerable<Ticket> Children { get; set; }
+
+        public Ticket()
+        {
+            Children = Enumerable.Empty<Ticket>();
+        }
 
         public static Ticket FromElement(XElement element)
         {
@@ -37,12 +50,20 @@ namespace Assembla.Models
             return ticket;
         }
 
+        public XDocument ToXDocument()
+        {
+            return new XDocument(new XElement("ticket",
+                new XElement("summary",Summary),
+                new XElement("description", Description),
+                new XElement("number", Number, new XAttribute("type", "integer"))));
+        }
+
         private static void SetProperties(XElement rootElement, Ticket ticket)
         {
             var properties = ticket.GetType().GetProperties();
             foreach (var prop in properties)
             {
-                var attribute = prop.CustomAttributes.First(x => x.AttributeType == typeof (XmlElementAttribute));
+                var attribute = prop.CustomAttributes.FirstOrDefault(x => x.AttributeType == typeof (XmlElementAttribute));
                 if (attribute != null)
                 {
                     var elementName = attribute.ConstructorArguments.First().Value as string;
