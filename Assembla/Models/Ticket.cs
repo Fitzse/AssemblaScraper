@@ -32,10 +32,10 @@ namespace Assembla.Models
         [XmlElement("description")]
         public string Description { get; set; }
 
-        [XmlIgnore]
+        public String Actor { get; set; }
+
         public int? ParentNumber { get; set; }
 
-        [XmlIgnore]
         public IEnumerable<Ticket> Children { get; set; }
 
         public Ticket()
@@ -55,7 +55,9 @@ namespace Assembla.Models
             return new XDocument(new XElement("ticket",
                 new XElement("summary",Summary),
                 new XElement("description", Description),
-                new XElement("number", Number, new XAttribute("type", "integer"))));
+                new XElement("number", Number),
+                new XElement("custom-fields",
+                    new XElement("Actor", Actor))));
         }
 
         private static void SetProperties(XElement rootElement, Ticket ticket)

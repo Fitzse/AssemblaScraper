@@ -229,7 +229,8 @@ namespace Assembla
                              {
                                  Description = story.GetNarrative(actor),
                                  Summary = story.Title,
-                                 Children = story.Children.Select(x => CreateTicket(actor, x))
+                                 Children = story.Children.Select(x => CreateTicket(actor, x)),
+                                 Actor = actor.Name
                              };
             return ticket;
         }

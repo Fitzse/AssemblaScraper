@@ -1,17 +1,23 @@
 <map version="0.9.0">
 <!-- To view this file, download free mind mapping software FreeMind from http://freemind.sourceforge.net -->
 <node CREATED="1351785000100" ID="ID_1577105187" MODIFIED="1352131164679" TEXT="Actors">
-<node CREATED="1351785000100" ID="ID_1630236259" MODIFIED="1352133249315" POSITION="right" STYLE="fork" TEXT="User">
+<node CREATED="1351785000100" ID="ID_1630236259" MODIFIED="1352390205794" POSITION="right" STYLE="fork" TEXT="User : An everyday user of the system, does not have any special responsibilities or concerns outside of completing their plans.">
 <node CREATED="1351785029359" ID="ID_1657087345" MODIFIED="1352138684060" TEXT="Can view a summary report of all my budget impacts by and timing and objective : Budget Impact Reporting [1.17]"/>
-<node CREATED="1351867014071" ID="ID_1576753283" MODIFIED="1352138699560" TEXT="Can view any published plan in the system : View Plans [1.1, 2.1]"/>
+<node CREATED="1351867014071" ID="ID_1576753283" MODIFIED="1352138699560" TEXT="Can view any published plan in the system : View Plans [1.1, 2.1]">
 <node CREATED="1352131718258" ID="ID_978642597" MODIFIED="1352138718775" TEXT="Can view the version history of any published plan in the system : View Plan History [1.2]"/>
-<node CREATED="1351786245434" ID="ID_1034891542" MODIFIED="1352138739551" TEXT="Can view all the objectives that have been delegated to me : View Delegated Objectives [1.11]"/>
+<node CREATED="1352393571690" ID="ID_1381137087" MODIFIED="1352393597249" TEXT="Can view a specific version of any plan in the system : View Specific Plan Version [1.2]"/>
+</node>
+<node CREATED="1351786245434" ID="ID_1034891542" MODIFIED="1352138739551" TEXT="Can view all the objectives that have been delegated to me : View Delegated Objectives [1.11]">
+<node CREATED="1352391533721" ID="ID_592031514" MODIFIED="1352391712981" TEXT="Want to view all the objectives in my business plan in the same order as in my manager&apos;s business plan, so as to facilitate easier communication with others about my plan : Order Child Plans Same As Parent"/>
+<node CREATED="1352391622381" ID="ID_1776673610" MODIFIED="1352391793109" TEXT="Want all my supported objectives, objectives, and supporting objectives to be automatically numbered within my business plan in the order they appear so as to facilitate easier communication with others about my plan : Numbering Of Objectives In A Plan"/>
+</node>
 <node CREATED="1351785337904" ID="ID_1622483735" MODIFIED="1352138756269" TEXT="Can view a list of my notifications sorted by type : View Notifications">
 <node CREATED="1351785378288" ID="ID_64928046" MODIFIED="1352138763784" TEXT="Can remove a notification from my list : Remove Notifications"/>
 <node CREATED="1351785563488" ID="ID_847543287" MODIFIED="1352138772455" TEXT="Can distinguish between read and unread notifications : Unread Notifications"/>
 </node>
-<node CREATED="1351785391878" ID="ID_61709481" MODIFIED="1352138905779" TEXT="Am notified when one of my cross-functional impacts is accepted/rejected : Notified On Impact Acknowledged [1.14]"/>
+<node CREATED="1351785391878" ID="ID_61709481" MODIFIED="1352393692201" TEXT="Am notified when one of my cross-functional impacts is accepted or rejected : Notified On Impact Acknowledged [1.14]"/>
 <node CREATED="1351785447790" ID="ID_876784987" MODIFIED="1352138842222" TEXT="Am notified when one of my objectives changes : Notified On Objective Changed [1.16]"/>
+<node CREATED="1352393717448" ID="ID_1464967911" MODIFIED="1352393802920" TEXT="Am notified when I am delegated a new objective : Notified On Objective Delegation [1.11]"/>
 <node CREATED="1351867089426" ID="ID_1308414099" MODIFIED="1352138897652" TEXT="Am notified when one of the objectives/supporting objectives associated with one of my cross-functional impacts changes description or timing : Notified On Objective Change Attached To Impacts [1.16]"/>
 <node CREATED="1352131585866" ID="ID_1506124957" MODIFIED="1352138930029" TEXT="Am notified when one of the cross-functional impacts I have been tagged in changes : Notified On Impact Change [1.14]"/>
 <node CREATED="1351785476277" ID="ID_857421008" MODIFIED="1352138952061" TEXT="Am notified when my manager un-approves my plan so that I can make the necessary changes : Notified On Plan Un-Approval"/>
@@ -33,51 +39,51 @@
 <node CREATED="1351786139136" ID="ID_1635564203" MODIFIED="1352139520683" TEXT="Can attached a cross-functional impact I have accepted to an existing objective in my business plan : Attach Impact To Existing Objective [1.14]"/>
 </node>
 </node>
-<node CREATED="1351786258568" ID="ID_1787578124" MODIFIED="1352152065848" TEXT="Can create a new business plan from all the objectives I have been delegated : Create New Plan [1.7]">
-<node CREATED="1351786276493" ID="ID_717894143" MODIFIED="1352155650536" TEXT="Can add an executive summary to my business plan : Executive Summary For Plan [1.7]"/>
-<node CREATED="1351867902781" ID="ID_359642043" MODIFIED="1352152135524" TEXT="Can add a description for the strategic positioning of my plan : Strategic Position For Plan [1.7]"/>
+<node CREATED="1351786258568" ID="ID_1787578124" MODIFIED="1352393852034" TEXT="Can create a new business containing all the objectives I have been delegated : Create New Plan [1.7]">
+<node CREATED="1351786276493" ID="ID_717894143" MODIFIED="1352393863223" TEXT="Must add an executive summary to my business plan : Executive Summary For Plan [1.7]"/>
+<node CREATED="1351867902781" ID="ID_359642043" MODIFIED="1352393866431" TEXT="Must add a description for the strategic positioning of my plan : Strategic Position For Plan [1.7]"/>
 <node CREATED="1351786288124" ID="ID_1478012938" MODIFIED="1352155640249" TEXT="Can print a business plan : Print Plan [2.1]"/>
-<node CREATED="1351786298160" ID="ID_951712756" MODIFIED="1352155634160" TEXT="Can print multiple business plans at the same time : Print Multiple Plans [2.1]"/>
+<node CREATED="1351786298160" ID="ID_951712756" MODIFIED="1352393881612" TEXT="Can print multiple business plans at once : Print Multiple Plans [2.1]"/>
 <node CREATED="1351786313944" ID="ID_1764517895" MODIFIED="1352152160692" TEXT="Can add risks to my business plan : Add Risks To Plan [1.7,1.8]">
-<node CREATED="1351786321824" ID="ID_15096637" MODIFIED="1352152179084" TEXT="Must add a description to each risk in my business plan : Risk Description [1.7]"/>
+<node CREATED="1351786321824" ID="ID_15096637" MODIFIED="1352393901585" TEXT="Must add a description for each risk in my business plan : Risk Description [1.7]"/>
 <node CREATED="1351786343721" ID="ID_1030893274" MODIFIED="1352152187452" TEXT="Can add a contingency plan to each risk in my business plan : Risk Contingency [1.9]"/>
 <node CREATED="1351786383114" ID="ID_1951101424" MODIFIED="1352155555530" TEXT="Must specify the category of each risk in my business plan : Risk Category [1.8]"/>
 <node CREATED="1351786404085" ID="ID_1410849312" MODIFIED="1352155564386" TEXT="Must specify a threshold value for at least one risk impact category for each risk in my business plan : Risk Impact Threshold [1.9]"/>
 <node CREATED="1351786489522" ID="ID_301233872" MODIFIED="1352152227900" TEXT="Can add a description of the existing controls and mitigating factors for each risk in my business plan : Risk Controls And Mitigating Factors [1.9]"/>
 </node>
-<node CREATED="1351786537519" ID="ID_1588637467" MODIFIED="1352152239332" TEXT="Can add supporting objectives to each objective in my business plan : Supporting Objectives [1.7]">
+<node CREATED="1351786537519" ID="ID_1588637467" MODIFIED="1352393935711" TEXT="Must add at least one supporting objective to each objective in my business plan : Supporting Objectives [1.7]">
 <node CREATED="1351786614068" ID="ID_1405258741" MODIFIED="1352152251436" TEXT="Can add cross-functional impacts to any supporting objectives in my business plan : Cross Functional Impacts [1.7]">
 <node CREATED="1351786872117" ID="ID_177999389" MODIFIED="1352152265522" TEXT="Can add an estimate of the potential resource requirement for each cross-functional impact I have created in my business plan : Resource Requirement For Impact [1.13]"/>
 <node CREATED="1351786907805" ID="ID_232407877" MODIFIED="1352216873305" TEXT="Must add a description of the nature of each cross-functional impact I have created in my business plan : Nature Of Impact [1.13]"/>
 <node CREATED="1351787001539" ID="ID_841752601" MODIFIED="1352152291884" TEXT="Can view the acceptance status of all the cross-functional impacts I have created in my business plan : Impact Acceptance Status [1.16]"/>
-<node CREATED="1351787016074" ID="ID_1009055275" MODIFIED="1352152303476" TEXT="Must specify the timing of each cross-functional impact I have created in my business plan : Impact Timing [1.13]"/>
+<node CREATED="1351787016074" ID="ID_1009055275" MODIFIED="1352406861516" TEXT="Must specify the timing of each cross-functional impact I have created in my business plan in the form of quarter and year : Impact Timing [1.13]"/>
 <node CREATED="1351787060897" ID="ID_263165604" MODIFIED="1352152316698" TEXT="Must tag at least one individual in each cross-functional impact I have created in my business plan : Tag Individuals In An Impact [1.13, 1.14]"/>
 <node CREATED="1351787201683" ID="ID_1706831271" MODIFIED="1352152328388" TEXT="Can navigate to the plan attached to any accepted cross-functional impact in my business plan : Navigate To Plan Through Impact"/>
 </node>
 <node CREATED="1351786646284" ID="ID_1146602733" MODIFIED="1352152345611" TEXT="Must specify the due date of each supporting objective in my business plan in the form of quarter and year : Supporting Objective Due Date [1.7]"/>
-<node CREATED="1351786682788" ID="ID_411262553" MODIFIED="1352152355548" TEXT="Can Add budget impacts to any supporting objectives in my business plan : Budget Impacts [1.7]"/>
+<node CREATED="1351786682788" ID="ID_411262553" MODIFIED="1352407008763" TEXT="Can add budget impacts to any supporting objectives in my business plan for operating, capital, or workforce: Budget Impacts [1.7]"/>
 <node CREATED="1351786727572" ID="ID_1027143172" MODIFIED="1352152373490" TEXT="Can view a summary of the status of all supporting objectives that are children of each of the supporting objectives in my business plan : Status Of All Child Objectives In Business Plan [2.7]"/>
+<node CREATED="1352395522627" ID="ID_896225597" MODIFIED="1352395582861" TEXT="Can view the latest expected date of completion of all supporting objectives that are children of each of the supporting objectives in my business plan : Completion Date Of All Child Objectives In Business Plan [2.7]"/>
 <node CREATED="1351786809421" ID="ID_806128889" MODIFIED="1352152399955" TEXT="Must specify the target of each supporting objective in my business plan : Targets For Supporting Objectives [1.7]"/>
 <node CREATED="1351786829059" ID="ID_1078980890" MODIFIED="1352152413595" TEXT="Must specify the measurement type of each supporting objective in my business plan : Measurement Type For Supporting Objectives [1.7]"/>
 </node>
-<node CREATED="1351868129666" ID="ID_1209481953" MODIFIED="1352217682040" TEXT="Can select specific supporting objectives from my business plan to be exported to my APfR : Export Supporting Objectives To APfR [1.5, 1.18, 2.1]"/>
-<node CREATED="1351868212198" ID="ID_1093663963" MODIFIED="1352152454130" TEXT="Can submit a quarterly status update for my business plan : Quarterly Status Update [1.15]">
+<node CREATED="1351868129666" ID="ID_1209481953" MODIFIED="1352395624629" TEXT="Can select specific supporting objectives from my business plan to be exported to a standard format for import into the APfR system : Export Supporting Objectives To APfR [1.5, 1.18, 2.1]"/>
+<node CREATED="1351868212198" ID="ID_1093663963" MODIFIED="1352391967451" TEXT="Must submit a quarterly status update for my business plan : Quarterly Status Update [1.15]">
 <node CREATED="1351868227473" ID="ID_1868338841" MODIFIED="1352152604647" TEXT="Can update the risks in my business plan in my quarterly status update : Update Risks During Status Update [1.15]"/>
-<node CREATED="1351868251531" ID="ID_773904441" MODIFIED="1352152647179" TEXT="Can update the performance entries for any supporting objectives in my business plan that I have not delegated during my quarterly status update : Update Performance Entries Of Supporting Objectives During Status Update [1.15]">
-<node CREATED="1351868313452" ID="ID_1551288430" MODIFIED="1352152855799" TEXT="Can add a comment to my performance update for each supporting objective in my business plan so that I can describe the final performance of a completed supporting objective :  Comment On Performance Update [1.15]"/>
-</node>
-<node CREATED="1351868353944" ID="ID_614849385" MODIFIED="1352152645200" TEXT="Can update the status of any of the supporting objectives in my business plan that I have not delegated in my quarterly status update : Update Status Of Supporting Objectives During Status Update [1.15]">
+<node CREATED="1351868251531" ID="ID_773904441" MODIFIED="1352152647179" TEXT="Can update the performance entries for any supporting objectives in my business plan that I have not delegated during my quarterly status update : Update Performance Entries Of Supporting Objectives During Status Update [1.15]"/>
+<node CREATED="1351868353944" ID="ID_614849385" MODIFIED="1352395672260" TEXT="Can update the status of any of the supporting objectives in my business plan that I have not delegated during my quarterly status update : Update Status Of Supporting Objectives During Status Update [1.15]">
 <node CREATED="1351868377606" ID="ID_1905186454" MODIFIED="1352152868504" TEXT="Can add a comment to my status update for each supporting objective in my business plan so that I can describe the reason for the change in status : Comment On Status Update [1.15]"/>
-<node CREATED="1351868448009" ID="ID_482833495" MODIFIED="1352217707359" TEXT="Can update the expected completion date of any supporting objective in my business plan when updating its status : Revise Completion Date During Status Update [1.15]"/>
+<node CREATED="1351868448009" ID="ID_482833495" MODIFIED="1352395740625" TEXT="Can update the expected completion date of any supporting objective in my business plan that I have not delegated when updating its status : Revise Completion Date During Status Update [1.15]"/>
+<node CREATED="1352391999182" ID="ID_542118049" MODIFIED="1352407079387" TEXT="Must update the performance of a supporting objective if changing it&apos;s status to completed : Performance Update Required On Supporting Objective Completion [1.15]"/>
 </node>
 </node>
 </node>
 </node>
-<node CREATED="1351869315697" ID="ID_1473490794" MODIFIED="1352133254619" POSITION="right" TEXT="Manager">
-<node CREATED="1351869324277" ID="ID_369458611" MODIFIED="1352153040337" TEXT="Am notified when one of my direct reports has submitted a plan to me for approval : Notified When Plan Submitted To Me [1.12]"/>
+<node CREATED="1351869315697" ID="ID_1473490794" MODIFIED="1352390221922" POSITION="right" TEXT="Manager : A user of the system who is responsible for the people reporting to him/her. They are concerned with the state of the business planning process of those individuals who report to them as well as the completion of their own objectives. They require both the narrow view of their own plan as well as overviews of those falling below them in the hierarchy so they can make management decisions to ensure as best they can that everyone&#x2019;s goals are met.">
+<node CREATED="1351869324277" ID="ID_369458611" MODIFIED="1352395754618" TEXT="Am notified when one of my direct reports has submitted a plan to me for approval : Notified When Plan Submitted For Approval [1.12]"/>
 <node CREATED="1351869627856" ID="ID_517724509" MODIFIED="1352217725759" TEXT="Can view aggregate reports of all the supporting objectives below me in the hierarchy : View Aggregate Reports [2.2]">
-<node CREATED="1351869408515" ID="ID_954847462" MODIFIED="1352155394396" TEXT="Can view the status of all supporting objectives below me in the hierarhcy filtered by different criteria : View Statuses In Objective Hierarchy [2.7]"/>
-<node CREATED="1351869560553" ID="ID_1446102210" MODIFIED="1352217943055" TEXT="Can view the performance entries of all supporting objectives below me filtered by different criteria : View Performance In Objective Hierarchy [ 2.8]"/>
+<node CREATED="1351869408515" ID="ID_954847462" MODIFIED="1352407117250" TEXT="Can view the status of all supporting objectives below me in the hierarchy filtered by department, stratum, timeframe, or objective : View Statuses In Objective Hierarchy [2.7]"/>
+<node CREATED="1351869560553" ID="ID_1446102210" MODIFIED="1352395803969" TEXT="Can view the performance entries of all supporting objectives below me filtered by department, stratum, timeframe, or objective : View Performance In Objective Hierarchy [ 2.8]"/>
 <node CREATED="1351869349651" ID="ID_1769325066" MODIFIED="1352153139186" TEXT="Can view a report of all delinquent status entries below me in the hierarchy so that I can contact the tardy individuals to inquire as to why they are late in their status updates : View Delinquent Status Updates In My Hierarchy [2.9]"/>
 <node CREATED="1351870039266" ID="ID_1347356768" MODIFIED="1352153161106" TEXT="Can view a report of all delinquent plan approvals below me in the hierarchy so that I can contact the tardy individuals to inquire as to why they are late in submitting their plans : View Delinquent Plan Approvals In My Hierarchy [2.9]"/>
 <node CREATED="1351870152817" ID="ID_111567339" MODIFIED="1352153191107" TEXT="Can view a dashboard overview of all the supporting objectives below me in the hierarchy : View Hierarchy Of My Supporting Objectives [2.2]"/>
@@ -94,7 +100,7 @@
 <node CREATED="1351870468270" ID="ID_1568574219" MODIFIED="1352153388402" TEXT="Can place the plan of one of my direct reports that is in draft approval into final approval : Move Plan From Draft Approval To Final Approval [1.12]"/>
 </node>
 </node>
-<node CREATED="1351870860838" ID="ID_1346895479" MODIFIED="1352133259304" POSITION="right" TEXT="Process Owner">
+<node CREATED="1351870860838" ID="ID_1346895479" MODIFIED="1352395825552" POSITION="right" TEXT="Process Owner : A user of the system responsible for the oversight of the entire business planning process. This includes monitoring the overall state of plans throughout the system, as well as the system wide administration of the business planning process.">
 <node CREATED="1351870929337" ID="ID_1724136959" MODIFIED="1352217979527" TEXT="Can view a report of all delinquent quarterly status updates throughout the company so that I can identify problem individuals and/or departments : View All Delinquent Status Updates [1.16]"/>
 <node CREATED="1351870967906" ID="ID_1508019407" MODIFIED="1352218431584" TEXT="Can initiate the S6 business plan, populating the objectives based on the corporate objectives for the company : Initiate S6 Plan With Objectives [1.3, 1.7]">
 <node CREATED="1351871206368" ID="ID_862239954" MODIFIED="1352153517511" TEXT="Can specify the supported objectives in the S6 business plan : Set Supported Objectives In S6 Plan [1.3,1.7]"/>
@@ -106,11 +112,11 @@
 </node>
 <node CREATED="1351871128477" ID="ID_151280189" MODIFIED="1352153592310" TEXT="Can view a report of all unresolved cross functional impacts throughout the company so that I can identify problem individuals and/or departments : View Unresolved Impacts [1.16,2.9]"/>
 <node CREATED="1351871159380" ID="ID_924708135" MODIFIED="1352218461552" TEXT="Can make a change to any plan in the company regardless of it&apos;s status so that I can manually deal with exceptional circumstances : Manually Edit Any Plan [1.1]"/>
-<node CREATED="1351871242565" ID="ID_628983206" MODIFIED="1352153615127" TEXT="Can rollback any plan in the company to a previous version : Rollback A Plan [1.2]"/>
+<node CREATED="1351871242565" ID="ID_628983206" MODIFIED="1352395864492" TEXT="Can rollback any plan for the current year in the system to a previous version : Rollback A Plan [1.2]"/>
 <node CREATED="1351871296463" ID="ID_1524388097" MODIFIED="1352153628622" TEXT="Can specify the options a user may select for risk categories : Specify Risk Categories [1.4]"/>
 <node CREATED="1351871326785" ID="ID_686923761" MODIFIED="1352153637999" TEXT="Can specify the options a user will see for risk impact categories : Specify Risk Impact Categories [1.4]"/>
-<node CREATED="1351871385696" ID="ID_1791472937" MODIFIED="1352153648798" TEXT="Can specify the options a user may select for risk impact thresholds : Specify Risk Impact Threshold [1.4]"/>
-<node CREATED="1351871422705" ID="ID_550122617" MODIFIED="1352218478663" TEXT="Can give individuals permissions to view/print plans so that personal assistants will be able to perform their jobs : Give Permissions To Print Plans [1.1]"/>
+<node CREATED="1351871385696" ID="ID_1791472937" MODIFIED="1352395912635" TEXT="Can specify the options a user may select for the thresholds of all visible risk impact categories : Specify Risk Impact Threshold [1.4]"/>
+<node CREATED="1351871422705" ID="ID_550122617" MODIFIED="1352395957903" TEXT="Can give individuals permissions to view/print plans so that personal assistants will be able to easily gather paperwork for their bosses : Give Permissions To Print Plans [1.1]"/>
 <node CREATED="1351871466581" ID="ID_1206501460" MODIFIED="1352153678348" TEXT="Can give an individual permissions to edit a specific plan so that executive assistants can properly assist their managers : Give Permissions To Edit Plans [1.1]"/>
 <node CREATED="1351871509441" ID="ID_936825126" MODIFIED="1352153691068" TEXT="Want all plans created by users to remain with their position if they change positions or are terminated so that the planning process is not disrupted : Plans Remain With A Positions [1.16]"/>
 <node CREATED="1351871559830" ID="ID_1294498367" MODIFIED="1352153714549" TEXT="Can enter the due dates for plan approvals by stratum for a given year : Enter Approval Due Dates For A Year [1.4]">
@@ -128,7 +134,7 @@
 <node CREATED="1352133094493" ID="ID_119333644" MODIFIED="1352153889931" TEXT="Want a new version of a plan to be created whenever a quarterly status update is completed : New Version Of A Plan On Status Update [1.2]"/>
 </node>
 </node>
-<node CREATED="1351870868318" ID="ID_1446213708" MODIFIED="1352133123164" POSITION="right" TEXT="ERM">
+<node CREATED="1351870868318" ID="ID_1446213708" MODIFIED="1352390254696" POSITION="right" TEXT="ERM : A user from the Enterprise Risk Management department, concerned with all the risks identified throughout the company.">
 <node CREATED="1351870874521" ID="ID_1914922489" MODIFIED="1352153423632" TEXT="Can view a report of all the risks in the company and their departments : View Risk Report [1.19, 2.6]"/>
 <node CREATED="1351870896147" ID="ID_98028595" MODIFIED="1352153440257" TEXT="Can view a report of all the risks that have changed after a quarterly status update : View Risk Changes Report"/>
 </node>
