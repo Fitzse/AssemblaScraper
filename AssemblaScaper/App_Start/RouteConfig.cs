@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace AssemblaScaper
@@ -15,13 +11,13 @@ namespace AssemblaScaper
 
             routes.MapRoute(
                 name: "SpecificationSubDomain",
-                url: "Specifications/{subdomain}/{space}",
+                url: "{space}/{secret}/tickets",
                 defaults: new { controller = "Specifications", action = "Index"}
             );
 
             routes.MapRoute(
                 name: "CreateSubDomain",
-                url: "Create/{subdomain}/{space}",
+                url: "{space}/{secret}/create",
                 defaults: new { controller = "Specifications", action = "Create"}
             );
         }

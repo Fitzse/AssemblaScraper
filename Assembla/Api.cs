@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 using Assembla.Models;
 using FreeMind.Models;
 
@@ -15,14 +12,14 @@ namespace Assembla
 {
     public class Api
     {
-        private const string LogSource = "Assembla Scraper";
-        private const string Log = "Application";
-        private readonly NetworkCredential _credentials;
-        private int _ticketNumber = 0;
+        private int _ticketNumber;
+        private readonly string _key;
+        private readonly string _secret;
 
-        public Api(string username, string password)
+        public Api(string key, string secret)
         {
-            _credentials = new NetworkCredential(username, password);
+            _key = key;
+            _secret = secret;
         }
 
         private HttpWebRequest CreateRequest(String url)
@@ -31,19 +28,19 @@ namespace Assembla
             if (request != null)
             {
                 request.MaximumAutomaticRedirections = 1;
+                request.Headers.Add("X-Api-Key", _key); 
+                request.Headers.Add("X-Api-Secret", _secret);
                 request.AllowAutoRedirect = true;
 
                 request.Accept = "application/xml";
                 request.ContentType = "application/xml";
-                request.Credentials = _credentials;
             }
             return request;
         }
 
-        public IEnumerable<Ticket> GetTicketsForSpace(string subdomain, string spaceName)
+        public IEnumerable<Ticket> GetTicketsForSpace(string spaceName)
         {
-            var space = GetSpace(subdomain, spaceName);
-            var url = String.Format("https://{0}.assembla.com/spaces/{1}/tickets/", subdomain, space.Id);
+            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/", spaceName);
             var request = CreateRequest(url);
             if(request != null)
             {
@@ -53,22 +50,6 @@ namespace Assembla
                     {
                         var xDoc = XDocument.Load(reader);
                         var tickets = xDoc.Descendants("ticket").Select(Ticket.FromElement).ToList();
-                        var associations = new Dictionary<int, int>();
-                        foreach (var t in tickets)
-                        {
-                            if(!associations.ContainsKey(t.Id))
-                            {
-                                var children = GetChildren(subdomain, spaceName, t.Number);
-                                foreach (var child in children)
-                                {
-                                    associations.Add(child,t.Id);
-                                }
-                            }
-                        }
-                        foreach (var t in tickets.Where(t => associations.ContainsKey(t.Id)))
-                        {
-                            t.ParentNumber = associations[t.Id];
-                        }
                         return tickets;
                     }
                 }
@@ -76,11 +57,11 @@ namespace Assembla
             return Enumerable.Empty<Ticket>();
         }
 
-        private Space GetSpace(string subdomain, string spaceName)
+        private Space GetSpace(string spaceName)
         {
             try
             {
-                var url = String.Format("https://{0}.assembla.com/spaces/{1}", subdomain, spaceName);
+                var url = String.Format("https://api.assembla.com/v1/spaces/{0}", spaceName);
                 var request = CreateRequest(url);
                 if(request != null)
                 {
@@ -99,19 +80,18 @@ namespace Assembla
             {
                 var message =
                     String.Format(
-                        "The space {0} at {1}.assembla.com could not be found or you do not have permission to access it.",
-                        spaceName, subdomain);
+                        "The space {0} at api.assembla.com could not be found or you do not have permission to access it.",
+                        spaceName);
                 throw new SpaceNotFoundException(message);
             }
             return new Space();
         }
 
-        public IEnumerable<int> GetChildren(string subdomain, string spaceName, int ticketId)
+        public IEnumerable<int> GetChildren(string spaceName, int ticketId)
         {
             try
             {
-                var space = GetSpace(subdomain, spaceName);
-                var url = String.Format("https://{0}.assembla.com/spaces/{1}/tickets/{2}/list_associations", subdomain, space.Id, ticketId);
+                var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/{1}/list_associations", spaceName, ticketId);
                 var request = CreateRequest(url);
                 if(request != null)
                 {
@@ -130,8 +110,8 @@ namespace Assembla
             {
                 var message =
                     String.Format(
-                        "The space {0} at {1}.assembla.com could not be found or you do not have permission to access it.",
-                        spaceName, subdomain);
+                        "The space {0} at api.assembla.com could not be found or you do not have permission to access it.",
+                        spaceName);
                 throw new SpaceNotFoundException(message);
             }
             return Enumerable.Empty<int>();
@@ -153,16 +133,15 @@ namespace Assembla
             return Convert.ToInt32(idElement.Value);
         }
 
-        public void CreateTicket(string subdomain, string spaceName, Ticket ticket)
+        public void CreateTicket(string spaceName, Ticket ticket)
         {
             var children = ticket.Children.ToList();
             ticket.Number = _ticketNumber++;
             foreach (var t in children)
             {
-                CreateTicket(subdomain, spaceName, t);
+                CreateTicket(spaceName, t);
             }
-            var space = GetSpace(subdomain, spaceName);
-            var url = String.Format("https://{0}.assembla.com/spaces/{1}/tickets/", subdomain, space.Id);
+            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/", spaceName);
             var request = CreateRequest(url);
             request.Method = "POST";
             using (var requestStream = request.GetRequestStream())
@@ -183,7 +162,7 @@ namespace Assembla
             {
                 try
                 {
-                    CreateAssociation(subdomain, spaceName, ticket.Number, child.Number);
+                    CreateAssociation(spaceName, ticket.Number, child.Number);
                 }
                 catch(Exception)
                 {
@@ -192,19 +171,17 @@ namespace Assembla
             }
         }
 
-        public void DeleteTicket(string subdomain, string spaceName, int ticketNumber)
+        public void DeleteTicket(string spaceName, int ticketNumber)
         {
-            var space = GetSpace(subdomain, spaceName);
-            var url = String.Format("https://{0}.assembla.com/spaces/{1}/tickets/{2}", subdomain, space.Id, ticketNumber);
+            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/{1}", spaceName, ticketNumber);
             var request = CreateRequest(url);
             request.Method = "DELETE";
             request.GetResponse();
         }
 
-        public void CreateAssociation(string subdomain, string spaceName, int parentNumber, int childNumber)
+        public void CreateAssociation(string spaceName, int parentNumber, int childNumber)
         {
-            var space = GetSpace(subdomain, spaceName);
-            var url = String.Format("https://{0}.assembla.com/spaces/{1}/tickets/{2}/api_add_association", subdomain, space.Id, parentNumber);
+            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/{1}/api_add_association", spaceName, parentNumber);
             var request = CreateRequest(url);
             request.Method = "Post";
             using(var requestStream = request.GetRequestStream())

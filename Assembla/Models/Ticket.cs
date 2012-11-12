@@ -20,15 +20,6 @@ namespace Assembla.Models
         [XmlElement("summary")]
         public string Summary { get; set; }
 
-        //[XmlElement("reporter-id")]
-        //public string ReporterId { get; set; }
-
-        //[XmlElement("priority")]
-        //public int Priority { get; set; }
-
-        //[XmlElement("status")]
-        //public int Status { get; set; }
-
         [XmlElement("description")]
         public string Description { get; set; }
 

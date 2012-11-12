@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+using System.Configuration;
 using System.Web.Mvc;
-using Assembla.Models;
 
 namespace AssemblaScaper.Controllers
 {
@@ -12,29 +9,31 @@ namespace AssemblaScaper.Controllers
         //
         // GET: /Specifications/
         private Assembla.Api _api;
-        private string _subdomain;
-        private string _spaceName;
+        private readonly string _apiKey ;
 
-        public ActionResult Index(string subdomain, string space, string username, string password)
+        public SpecificationsController()
         {
-            _subdomain = subdomain;
-            _spaceName = space;
-            _api = new Assembla.Api(username, password);
-            var tickets = _api.GetTicketsForSpace(_subdomain ?? "www", space);
+            _apiKey = ConfigurationManager.AppSettings["ApiKey"];
+        }
+
+        public ActionResult Index(string space, string secret)
+        {
+            _api = new Assembla.Api(_apiKey, secret);
+            var tickets = _api.GetTicketsForSpace(space);
             ViewData["space"] = space;
             return View(tickets);
         }
 
-        public ActionResult Create(string subdomain, string space, string username, string password)
+        public ActionResult Create(string space, string secret)
         {
-            _api = new Assembla.Api(username, password);
+            _api = new Assembla.Api(_apiKey, secret);
             var actors = FreeMind.Converter.GetActorsFromFile(@"D:\Personal\AssemblaScaper\AssemblaScaper\UserStories.mm");
 
             for (int i = 0; i < 60;i++ )
             {
                 try
                 {
-                    _api.DeleteTicket(subdomain, space, i);
+                    _api.DeleteTicket(space, i);
                 }
                 catch(Exception){}
             }
@@ -44,10 +43,10 @@ namespace AssemblaScaper.Controllers
                 var tickets = _api.GetTicketsFromActor(actor);
                 foreach (var ticket in tickets)
                 {
-                    _api.CreateTicket(subdomain, space, ticket);
+                    _api.CreateTicket(space, ticket);
                 }
             }
-            return RedirectToAction("Index", new { subdomain, space, username, password });
+            return RedirectToAction("Index", new { space, secret});
         }
     }
 }
