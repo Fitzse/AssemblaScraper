@@ -11,14 +11,8 @@ namespace AssemblaScaper
 
             routes.MapRoute(
                 name: "SpecificationSubDomain",
-                url: "{space}/{secret}/tickets",
-                defaults: new { controller = "Specifications", action = "Index"}
-            );
-
-            routes.MapRoute(
-                name: "CreateSubDomain",
-                url: "{space}/{secret}/create",
-                defaults: new { controller = "Specifications", action = "Create"}
+                url: "{space}/{secret}/{action}",
+                defaults: new { controller = "Specifications", action = "Tickets"}
             );
         }
     }

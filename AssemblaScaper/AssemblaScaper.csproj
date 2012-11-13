@@ -140,7 +140,7 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Specifications\Index.cshtml" />
+    <Content Include="Views\Specifications\Tickets.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Assembla\Assembla.csproj">

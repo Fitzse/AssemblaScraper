@@ -6,7 +6,6 @@ using System.Net;
 using System.Text;
 using System.Xml.Linq;
 using Assembla.Models;
-using FreeMind.Models;
 
 namespace Assembla
 {
@@ -40,7 +39,7 @@ namespace Assembla
 
         public IEnumerable<Ticket> GetTicketsForSpace(string spaceName)
         {
-            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/", spaceName);
+            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets.xml", spaceName);
             var request = CreateRequest(url);
             if(request != null)
             {
@@ -133,15 +132,15 @@ namespace Assembla
             return Convert.ToInt32(idElement.Value);
         }
 
-        public void CreateTicket(string spaceName, Ticket ticket)
+        public int CreateTicket(string spaceName, Ticket ticket)
         {
             var children = ticket.Children.ToList();
             ticket.Number = _ticketNumber++;
             foreach (var t in children)
             {
-                CreateTicket(spaceName, t);
+                t.Id = CreateTicket(spaceName, t);
             }
-            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/", spaceName);
+            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets.xml", spaceName);
             var request = CreateRequest(url);
             request.Method = "POST";
             using (var requestStream = request.GetRequestStream())
@@ -149,26 +148,22 @@ namespace Assembla
                 var doc = ticket.ToXDocument();
                 var xmlString = Encoding.UTF8.GetBytes(doc.ToString());
                 requestStream.Write(xmlString, 0, xmlString.Length);
-                try
+                using(var response = request.GetResponse())
+                using(var responseStream = response.GetResponseStream())
                 {
-                    request.GetResponse();
-                }
-                catch (Exception)
-                {
-                    var stuff = 10;
-                }
+                    var responseDoc = XDocument.Load(responseStream);
+                    var ticketRoot = responseDoc.Element("ticket");
+                    if(ticketRoot != null)
+                    {
+                        ticket.Id = Convert.ToInt32(ticketRoot.Element("id").Value);
+                    }
+                };
             }
             foreach (var child in children)
             {
-                try
-                {
-                    CreateAssociation(spaceName, ticket.Number, child.Number);
-                }
-                catch(Exception)
-                {
-                    var stuff = 10;
-                }
+                CreateAssociation(spaceName, ticket.Number, child.Id);
             }
+            return ticket.Id;
         }
 
         public void DeleteTicket(string spaceName, int ticketNumber)
@@ -181,37 +176,19 @@ namespace Assembla
 
         public void CreateAssociation(string spaceName, int parentNumber, int childNumber)
         {
-            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/{1}/api_add_association", spaceName, parentNumber);
+            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/{1}/ticket_associations.xml", spaceName, parentNumber);
             var request = CreateRequest(url);
-            request.Method = "Post";
+            request.Method = "POST";
             using(var requestStream = request.GetRequestStream())
             {
-                var doc = new XDocument(new XElement("association",
-                                        new XElement("with", childNumber, new XAttribute("type", "integer")),
+                var doc = new XDocument(new XElement("ticket_association",
+                                        new XElement("ticket2_id", childNumber),
                                         new XElement("relationship", "1")));
                 var xmlString = Encoding.UTF8.GetBytes(doc.ToString());
                 requestStream.Write(xmlString, 0, xmlString.Length);
                 request.GetResponse();
             }
         }
-
-        public IEnumerable<Ticket> GetTicketsFromActor(Actor actor)
-        {
-            return actor.Stories.Select(x => CreateTicket(actor, x));
-        }
-
-        private Ticket CreateTicket(Actor actor, Story story)
-        {
-            var ticket = new Ticket()
-                             {
-                                 Description = story.GetNarrative(actor),
-                                 Summary = story.Title,
-                                 Children = story.Children.Select(x => CreateTicket(actor, x)),
-                                 Actor = actor.Name
-                             };
-            return ticket;
-        }
-
 
         class SpaceNotFoundException : Exception
         {
