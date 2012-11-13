@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-using System.Xml.Linq;
 using Assembla.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -23,27 +22,17 @@ namespace Assembla
             _secret = secret;
         }
 
-        private HttpWebRequest CreateXmlRequest(String url)
+        public void ResetTicketNumber(int number)
         {
-            var request = WebRequest.Create(url) as HttpWebRequest;
-            if (request != null)
-            {
-                request.MaximumAutomaticRedirections = 1;
-                request.Headers.Add("X-Api-Key", _key); 
-                request.Headers.Add("X-Api-Secret", _secret);
-                request.AllowAutoRedirect = true;
-
-                request.Accept = "application/xml";
-                request.ContentType = "application/xml";
-            }
-            return request;
+            _ticketNumber = number;
         }
 
-        private HttpWebRequest CreateJsonRequest(String url)
+        private HttpWebRequest CreateJsonRequest(String url, string method = "GET")
         {
             var request = WebRequest.Create(url) as HttpWebRequest;
             if (request != null)
             {
+                request.Method = method;
                 request.MaximumAutomaticRedirections = 1;
                 request.Headers.Add("X-Api-Key", _key); 
                 request.Headers.Add("X-Api-Secret", _secret);
@@ -64,61 +53,53 @@ namespace Assembla
 
         private JArray GetJArrayResponse(string url)
         {
-            var request = CreateXmlRequest(url);
+            var request = CreateJsonRequest(url);
             if(request != null)
             {
                 using (var response = request.GetResponse())
                 using(var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
                 {
                     var jsonString = reader.ReadToEnd();
-                    return JArray.Parse(jsonString);
+                    if(!String.IsNullOrWhiteSpace(jsonString))
+                    {
+                        return JArray.Parse(jsonString);
+                    }
                 }
             }
-            return null;
+            return new JArray();
         }
 
-        private JObject GetJOjectResponse(string url)
+        private JObject GetPostResponse(string url, object toSend)
         {
-            var request = CreateXmlRequest(url);
-            if(request != null)
+            var request = CreateJsonRequest(url, "POST");
+            using(var requestStream = request.GetRequestStream())
             {
+                var serializedOject = JsonConvert.SerializeObject(toSend);
+                var jsonRequest = Encoding.UTF8.GetBytes(serializedOject);
+                requestStream.Write(jsonRequest, 0, jsonRequest.Length);
                 using (var response = request.GetResponse())
-                using(var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
+                using (var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
                 {
-                    var jsonString = reader.ReadToEnd();
-                    return JObject.Parse(jsonString);
+                    var jsonResponse = reader.ReadToEnd();
+                    return JObject.Parse(jsonResponse);
                 }
             }
-            return null;
         }
 
         public int CreateTicket(string spaceName, Ticket ticket)
         {
             var children = ticket.Children.ToList();
             ticket.Number = _ticketNumber++;
+
             foreach (var t in children)
             {
                 t.Id = CreateTicket(spaceName, t);
             }
-            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets.xml", spaceName);
-            var request = CreateXmlRequest(url);
-            request.Method = "POST";
-            using (var requestStream = request.GetRequestStream())
-            {
-                var doc = ticket.ToXDocument();
-                var xmlString = Encoding.UTF8.GetBytes(doc.ToString());
-                requestStream.Write(xmlString, 0, xmlString.Length);
-                using(var response = request.GetResponse())
-                using(var responseStream = response.GetResponseStream())
-                {
-                    var responseDoc = XDocument.Load(responseStream);
-                    var ticketRoot = responseDoc.Element("ticket");
-                    if(ticketRoot != null)
-                    {
-                        ticket.Id = Convert.ToInt32(ticketRoot.Element("id").Value);
-                    }
-                };
-            }
+
+            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets.json", spaceName);
+            var jsonResponse = GetPostResponse(url, ticket.ToObject());
+            ticket.Id = jsonResponse["id"].Value<int>();
+
             foreach (var child in children)
             {
                 CreateAssociation(spaceName, ticket.Number, child.Id);
@@ -129,26 +110,15 @@ namespace Assembla
         public void DeleteTicket(string spaceName, int ticketNumber)
         {
             var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/{1}", spaceName, ticketNumber);
-            var request = CreateXmlRequest(url);
-            request.Method = "DELETE";
+            var request = CreateJsonRequest(url, "DELETE");
             request.GetResponse();
         }
 
-        public void CreateAssociation(string spaceName, int parentNumber, int childNumber)
+        public void CreateAssociation(string space, int parentNumber, int childId)
         {
-            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/{1}/ticket_associations.xml", spaceName, parentNumber);
-            var request = CreateXmlRequest(url);
-            request.Method = "POST";
-            using(var requestStream = request.GetRequestStream())
-            {
-                var doc = new XDocument(new XElement("ticket_association",
-                                        new XElement("ticket2_id", childNumber),
-                                        new XElement("relationship", "1")));
-                var xmlString = Encoding.UTF8.GetBytes(doc.ToString());
-                requestStream.Write(xmlString, 0, xmlString.Length);
-                request.GetResponse();
-            }
+            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/{1}/ticket_associations.json", space, parentNumber);
+            var association = new {ticket_association = new {ticket2_id = childId, relationship = "1"}};
+            GetPostResponse(url, association);
         }
     }
-
 }

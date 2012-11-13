@@ -31,6 +31,7 @@ namespace AssemblaScaper.Controllers
             _api = new Assembla.Api(_apiKey, secret);
             var actors =
                 FreeMind.Converter.GetActorsFromFile(@"D:\Personal\AssemblaScaper\AssemblaScaper\UserStories.mm");
+            ResetTIcketNumbering(space);
 
             foreach (var actor in actors)
             {
@@ -42,6 +43,15 @@ namespace AssemblaScaper.Controllers
             }
 
             return RedirectToAction("Tickets", new {space, secret});
+        }
+
+        private void ResetTIcketNumbering(string space)
+        {
+            var existingTickets = _api.GetTicketsForSpace(space).ToList();
+            var highestTicket = 0;
+            if (existingTickets.Any())
+                highestTicket = existingTickets.Max(x => x.Number);
+            _api.ResetTicketNumber(highestTicket + 1);
         }
 
         private IEnumerable<Ticket> GetTicketsFromActor(Actor actor)
