@@ -4,28 +4,26 @@ using System.Data;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace Assembla.Models
 {
-    [Serializable]
-    [XmlRoot("ticket")]
+    [JsonObject]
     public class Ticket
     {
-        [XmlElement("id")]
+        [JsonProperty(PropertyName = "id")]
         public int Id { get; set; }
 
-        [XmlElement("number")]
+        [JsonProperty(PropertyName = "number")]
         public int Number { get; set; }
-
-        [XmlElement("summary")]
+        
+        [JsonProperty(PropertyName = "summary")]
         public string Summary { get; set; }
 
-        [XmlElement("description")]
+        [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
         public String Actor { get; set; }
-
-        public int? ParentNumber { get; set; }
 
         public IEnumerable<Ticket> Children { get; set; }
 
