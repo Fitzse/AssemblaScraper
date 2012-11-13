@@ -58,11 +58,11 @@ namespace Assembla
         public IEnumerable<Ticket> GetTicketsForSpace(string spaceName)
         {
             var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets.json", spaceName);
-            var json = GetJsonResponse(url);
+            var json = GetJArrayResponse(url);
             return json.ToObject<IEnumerable<Ticket>>();
         }
 
-        private JArray GetJsonResponse(string url)
+        private JArray GetJArrayResponse(string url)
         {
             var request = CreateXmlRequest(url);
             if(request != null)
@@ -77,80 +77,19 @@ namespace Assembla
             return null;
         }
 
-        private Space GetSpace(string spaceName)
+        private JObject GetJOjectResponse(string url)
         {
-            try
+            var request = CreateXmlRequest(url);
+            if(request != null)
             {
-                var url = String.Format("https://api.assembla.com/v1/spaces/{0}", spaceName);
-                var request = CreateXmlRequest(url);
-                if(request != null)
+                using (var response = request.GetResponse())
+                using(var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
                 {
-                    using (var response = request.GetResponse() as HttpWebResponse)
-                    {
-                        using(var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
-                        {
-                            var xDoc = XDocument.Load(reader);
-                            var spaceElement = xDoc.Element("space");
-                            return Space.FromElement(spaceElement);
-                        }
-                    }
+                    var jsonString = reader.ReadToEnd();
+                    return JObject.Parse(jsonString);
                 }
             }
-            catch (Exception)
-            {
-                var message =
-                    String.Format(
-                        "The space {0} at api.assembla.com could not be found or you do not have permission to access it.",
-                        spaceName);
-                throw new SpaceNotFoundException(message);
-            }
-            return new Space();
-        }
-
-        public IEnumerable<int> GetChildren(string spaceName, int ticketId)
-        {
-            try
-            {
-                var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/{1}/list_associations", spaceName, ticketId);
-                var request = CreateXmlRequest(url);
-                if(request != null)
-                {
-                    using (var response = request.GetResponse() as HttpWebResponse)
-                    {
-                        using(var reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8))
-                        {
-                            var xDoc = XDocument.Load(reader);
-                            var elements = xDoc.Descendants("ticket-association");
-                            return elements.Where(IsParentElement).Select(GetChildId);
-                        }
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                var message =
-                    String.Format(
-                        "The space {0} at api.assembla.com could not be found or you do not have permission to access it.",
-                        spaceName);
-                throw new SpaceNotFoundException(message);
-            }
-            return Enumerable.Empty<int>();
-        }
-    
-        private static bool IsParentElement(XElement element)
-        {
-            var relationshipElement = element.Element("relationship");
-            if(relationshipElement == null)
-            {
-                return false;
-            }
-
-            return Convert.ToInt32(relationshipElement.Value) == 0;
-        }
-        private static int GetChildId(XElement element)
-        {
-            var idElement = element.Element("ticket1-id");
-            return Convert.ToInt32(idElement.Value);
+            return null;
         }
 
         public int CreateTicket(string spaceName, Ticket ticket)
@@ -208,13 +147,6 @@ namespace Assembla
                 var xmlString = Encoding.UTF8.GetBytes(doc.ToString());
                 requestStream.Write(xmlString, 0, xmlString.Length);
                 request.GetResponse();
-            }
-        }
-
-        class SpaceNotFoundException : Exception
-        {
-            public SpaceNotFoundException(string message) : base(message)
-            {
             }
         }
     }
