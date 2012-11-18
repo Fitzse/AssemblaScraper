@@ -1,10 +1,11 @@
 ﻿@model IEnumerable<Assembla.Models.Ticket>
 @{
     ViewBag.Title = "Tickets";
+    Layout = "~/Views/Shared/_Foundation.cshtml";
 }
-
-<h2>Tickets For @ViewData["space"]</h2>
+<ul class="accordion">
 @foreach(var ticket in Model)
 {
     @Html.DisplayFor(m => ticket);
 }
+</ul>

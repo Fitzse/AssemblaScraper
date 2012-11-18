@@ -3,5 +3,14 @@
 @{
     Layout = null;
 }
-<h2>#@Model.Number - @Model.Summary</h2>
-<p>@Model.Description</p>
+<script type="text/javascript">
+    $(function() { $(document).foundationAccordion(); });
+</script>
+<li>
+    <div class="title">
+        <h4>@Model.Summary</h4>
+    </div>
+    <div class="content">
+        <p>@Model.Description</p>
+    </div>
+</li>

@@ -23,7 +23,7 @@ namespace AssemblaScaper.Controllers
             _api = new Assembla.Api(_apiKey, secret);
             var tickets = _api.GetTicketsForSpace(space);
             ViewData["space"] = space;
-            return View(tickets);
+            return View(tickets.OrderBy(x => x.Summary));
         }
 
         public ActionResult Create(string space, string secret)
