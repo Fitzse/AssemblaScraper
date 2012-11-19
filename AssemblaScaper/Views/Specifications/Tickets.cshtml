@@ -9,10 +9,11 @@
         $(function() { $(document).foundationAccordion(); });
     </script>
 }
-
-<ul class="accordion">
-@foreach(var ticket in Model)
-{
-    @Html.DisplayFor(m => ticket)
-}
-</ul>
+<div class="row">
+    <div class="columns 6">
+        @foreach(var ticket in Model)
+        {
+            @Html.DisplayFor(m => ticket)
+        }
+    </div>
+</div>

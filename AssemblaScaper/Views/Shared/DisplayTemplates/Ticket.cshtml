@@ -3,14 +3,13 @@
 @{
     Layout = null;
 }
-<li>
+<div class="panel">
+    <h4>#@Model.Number - @Model.Summary</h4>
+    <p>@Model.Description</p>
     <div>
-        <h4>@Model.Summary</h4>
+    @foreach(var t in @Model.Children)
+    {
+        @Html.DisplayFor(m => t)
+    }
     </div>
-    <div>
-        <p>@Model.Description</p>
-        <ul>
-            @Html.DisplayFor(m => m.Children)
-        </ul>
-    </div>
-</li>
+</div>
