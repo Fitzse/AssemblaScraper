@@ -44,11 +44,36 @@ namespace Assembla
             return request;
         }
 
+        public IEnumerable<TicketAssociation> GetAssociations(String spaceName, Ticket ticket)
+        {
+            var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets/{1}/ticket_associations.json", spaceName, ticket.Number);
+            var json = GetJArrayResponse(url);
+            return json.ToObject<IEnumerable<TicketAssociation>>();
+        }
+
         public IEnumerable<Ticket> GetTicketsForSpace(string spaceName)
         {
             var url = String.Format("https://api.assembla.com/v1/spaces/{0}/tickets.json", spaceName);
             var json = GetJArrayResponse(url);
-            return json.ToObject<IEnumerable<Ticket>>();
+            var tickets = json.ToObject<IEnumerable<Ticket>>().ToList();
+            foreach (var ticket in tickets)
+            {
+                var associations = GetAssociations(spaceName, ticket);
+                var parentAssoc = associations.FirstOrDefault(x => x.Ticket1Id == ticket.Id);
+                if(parentAssoc != null)
+                {
+                    ticket.ParentId = parentAssoc.Ticket2Id;
+                }
+            }
+            return tickets.Where(x => x.ParentId == 0).Select(x => GetHierarhcy(tickets, x));
+        }
+
+        private Ticket GetHierarhcy(IEnumerable<Ticket> flatList, Ticket ticket)
+        {
+            flatList = flatList.ToList();
+            var children = flatList.Where(x => x.ParentId == ticket.Id).ToList();
+            ticket.Children = children.Select(x => GetHierarhcy(flatList, x));
+            return ticket;
         }
 
         private JArray GetJArrayResponse(string url)

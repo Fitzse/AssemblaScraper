@@ -45,8 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api.cs" />
-    <Compile Include="Models\Space.cs" />
     <Compile Include="Models\Ticket.cs" />
+    <Compile Include="Models\TicketAssociation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

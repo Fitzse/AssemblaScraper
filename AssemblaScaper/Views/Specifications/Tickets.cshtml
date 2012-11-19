@@ -3,9 +3,16 @@
     ViewBag.Title = "Tickets";
     Layout = "~/Views/Shared/_Foundation.cshtml";
 }
+@section scripts
+{
+    <script type="text/javascript">
+        $(function() { $(document).foundationAccordion(); });
+    </script>
+}
+
 <ul class="accordion">
 @foreach(var ticket in Model)
 {
-    @Html.DisplayFor(m => ticket);
+    @Html.DisplayFor(m => ticket)
 }
 </ul>

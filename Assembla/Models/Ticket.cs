@@ -24,6 +24,8 @@ namespace Assembla.Models
 
         public IEnumerable<Ticket> Children { get; set; }
 
+        public int ParentId { get; set; }
+
         public Ticket()
         {
             Children = Enumerable.Empty<Ticket>();

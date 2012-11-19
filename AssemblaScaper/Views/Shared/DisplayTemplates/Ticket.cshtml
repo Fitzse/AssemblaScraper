@@ -3,14 +3,14 @@
 @{
     Layout = null;
 }
-<script type="text/javascript">
-    $(function() { $(document).foundationAccordion(); });
-</script>
 <li>
-    <div class="title">
+    <div>
         <h4>@Model.Summary</h4>
     </div>
-    <div class="content">
+    <div>
         <p>@Model.Description</p>
+        <ul>
+            @Html.DisplayFor(m => m.Children)
+        </ul>
     </div>
 </li>
